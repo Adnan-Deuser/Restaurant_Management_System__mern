@@ -44,7 +44,7 @@ const CartDetails = () => {
                   className='text-[#ababab] cursor-pointer' size={15} />
                   <FaNotesMedical className='text-[#ababab] cursor-pointer' size={15} />
                 </div>
-                <p className='text-[#f5f5f5] text-md font-bold'>₹{item.totalPrice}</p>
+                <p className='text-[#f5f5f5] text-md font-bold'>₹{item.price * item.quantity}</p>
               </div>
             </div>
               )     
