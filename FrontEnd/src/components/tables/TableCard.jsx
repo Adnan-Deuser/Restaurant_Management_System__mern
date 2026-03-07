@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateTable } from '../../redux/slices/customerSlice';
+import { getAvatarName } from '../../utils';
 
 const TableCard = ({ name, status, initials, seats }) => {
 
@@ -29,7 +30,7 @@ const TableCard = ({ name, status, initials, seats }) => {
 
       <div className='flex items-center justify-between'>
         <h1 className='text-white text-xl font-bold tracking-wide'>
-          {name}
+          Table {name}
         </h1>
 
         <span
@@ -52,7 +53,7 @@ const TableCard = ({ name, status, initials, seats }) => {
             : "bg-gradient-to-br from-green-400 to-emerald-600 text-black"}
           `}
         >
-          {initials}
+          {getAvatarName(initials) || "N/A"}
         </div>
       </div>
 

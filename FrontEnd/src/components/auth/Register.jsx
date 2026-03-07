@@ -140,8 +140,8 @@ const Register = ({setIsRegister}) => {
                         hover:-translate-y-[1px]
                         active:scale-[0.98]"
             >
-  Sign Up
-</button>
+                        Sign Up
+                    </button>
         </form>
     </div>
   )

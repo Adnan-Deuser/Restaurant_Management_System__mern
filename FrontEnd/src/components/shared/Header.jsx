@@ -6,6 +6,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { removeUser } from '../../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../../https/index"
+import { MdDashboard } from 'react-icons/md';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -33,9 +34,9 @@ const Header = () => {
                    bg-gradient-to-br from-[#031107] via-[#042510] to-[#05391a]
                    backdrop-blur-md border-b border-[#111] shadow-lg">
 
-      <div className="flex items-center gap-3">
+      <div onClick={()=> navigate("/")} className="flex items-center gap-3 cursor-pointer">
         <img src='src/assets/logo.png' className="h-10 w-10 rounded-xl shadow-md" alt="Hotel Logo" />
-        <h1 className="text-xl font-bold text-white drop-shadow-md">Hell's Kitchen</h1>
+        <h1 className="text-md font-bold text-white drop-shadow-md">Hell's Kitchen</h1>
       </div>
 
       <div className="flex items-center gap-3 bg-[#1f1f1f]/90 backdrop-blur-sm rounded-2xl px-5 py-2 shadow-md w-[480px] transition-all hover:scale-105">
@@ -48,6 +49,13 @@ const Header = () => {
       </div>
 
       <div className="flex items-center gap-6">
+        {
+          userData.role === "Admin" && (
+            <div onClick={()=> navigate("/dashboard")}className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform">
+              <MdDashboard className="text-[#f5f5f5] text-2xl drop-shadow-md" />
+            </div>
+          )
+        }
         <div className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform">
           <FaBell className="text-[#f5f5f5] text-2xl drop-shadow-md" />
         </div>

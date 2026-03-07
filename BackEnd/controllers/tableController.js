@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 
 const addTable = async (req, res, next) => {
     try {
-        const { tableNo } = req.body;
+        const { tableNo, seats } = req.body;
         if(!tableNo){
             const error = createHttpError(404, "Please provide TableNo");
             return next(error);
@@ -16,7 +16,7 @@ const addTable = async (req, res, next) => {
             return next(error);
         }
 
-        const newTable = new Table({tableNo});
+        const newTable = new Table({tableNo, seats});
         await newTable.save();
 
         res.status(201).json({success: true, message: "Table Created", data: newTable})
@@ -26,7 +26,10 @@ const addTable = async (req, res, next) => {
 }
 const getTables = async (req, res, next) => {
     try {
-        const tables = await Table.find();
+        const tables = await Table.find().populate({
+            path: "currentOrder",
+            select: "customerDetails"
+        });
         if(tables.length === 0){
             const error = createHttpError(404, "Tables is empty");
             return next(error);
