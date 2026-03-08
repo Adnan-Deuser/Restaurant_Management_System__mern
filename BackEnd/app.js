@@ -16,7 +16,7 @@ app.use(express.json());  //it parses incoming requests in json format
 app.use(cookieParser());
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:5173','https://restaurantfrontend-git-main-adnan-deusers-projects.vercel.app/']
+    origin: ['http://localhost:5173','https://restaurantfrontend-git-main-adnan-deusers-projects.vercel.app/','https://restaurantfrontend-gamma.vercel.app/']
 }))
 
 app.get("/", (req,res) =>{
