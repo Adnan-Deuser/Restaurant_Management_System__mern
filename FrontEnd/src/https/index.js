@@ -23,6 +23,5 @@ export const getTables = () => api.get("api/table");
 export const updateTable = ({tableId, ...tableData}) => api.put(`api/table/${tableId}`, tableData);
 
 export const getOrders = () => api.get("api/order");
-export const updateOrderStatus = (data) => api.put("api/table", data);
-
+export const updateOrderStatus = ({orderId, orderStatus}) => api.put(`api/order/${orderId}`, {orderStatus});
 export const addOrder = (data) => api.post("api/order", data);

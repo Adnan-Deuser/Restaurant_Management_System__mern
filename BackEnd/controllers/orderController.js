@@ -3,15 +3,34 @@ const createHttpError = require("http-errors");
 const Order = require("../model/orderModel");
 const { default: mongoose } = require("mongoose");
 
-const addOrder = async (req, res, next)=>{
+const addOrder = async (req, res, next) => {
     try {
+
+        const existingOrder = await Order.findOne({
+            table: req.body.table,
+            orderStatus: "In Progress"
+        });
+
+        if (existingOrder) {
+            return res.status(400).json({
+                success: false,
+                message: "Order already exists for this table"
+            });
+        }
+
         const order = new Order(req.body);
         await order.save();
-        res.status(201).json({success:true, message: "Order Created", data: order});
+
+        res.status(201).json({
+            success: true,
+            message: "Order Created",
+            data: order
+        });
+
     } catch (error) {
-        next(error)
+        next(error);
     }
-}
+};
 const getOrderById = async (req, res, next)=>{
 
     try {
@@ -37,7 +56,7 @@ const getOrderById = async (req, res, next)=>{
 }
 const getOrders = async (req, res, next)=>{
     try {
-        const orders = await Order.find();
+        const orders = await Order.find().populate("table");
         res.status(200).json({data: orders})
     } catch (error) {
         next(error)

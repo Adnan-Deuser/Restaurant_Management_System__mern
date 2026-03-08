@@ -21,10 +21,10 @@ const customerSlice = createSlice({
         },
 
         removeCustomer : (state) => {
-            state.customerName ="",
-            state.customerPhone="",
-            state.guests=0,
-            state.table= null;
+                state.customerName ="",
+                state.customerPhone="",
+                state.guests=0,
+                state.table= null;
         },
         updateTable: (state,action) => {
             state.table = action.payload.table;
