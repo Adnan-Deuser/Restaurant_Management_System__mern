@@ -388,6 +388,16 @@ export const salads = [
 ];
 
 
+
+export const monsterShakes = [
+  {
+    id: 1,
+    name: "Monster Vanilla",
+    price: 250,
+    category: "Cold"
+  }
+];
+
 export const menus = [
 { id: 1, name: "Starters", bgColor: "linear-gradient(135deg, #b73e3e, #e25858)", icon: "🍲", items: startersItem },
 { id: 2, name: "Main Course", bgColor: "linear-gradient(135deg, #5b45b0, #7b61d1)", icon: "🍛", items: mainCourse },
@@ -396,7 +406,8 @@ export const menus = [
 { id: 5, name: "Desserts", bgColor: "linear-gradient(135deg, #1d2569, #37499b)", icon: "🍰", items: desserts },
 { id: 6, name: "Pizzas", bgColor: "linear-gradient(135deg, #285430, #3f7a52)", icon: "🍕", items: pizzas },
 { id: 7, name: "Alcoholic Drinks", bgColor: "linear-gradient(135deg, #b73e3e, #e25858)", icon: "🍺", items: alcoholicDrinks },
-{ id: 8, name: "Salads", bgColor: "linear-gradient(135deg, #5b45b0, #7b61d1)", icon: "🥗", items: salads }
+{ id: 8, name: "Salads", bgColor: "linear-gradient(135deg, #5b45b0, #7b61d1)", icon: "🥗", items: salads },
+{ id: 9, name: "Monster Shakes", bgColor: "linear-gradient(135deg, #7278b1, #050d2e)", icon: "💕", items: monsterShakes }
 ]
 
 export const metricsData = [

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FaHome } from "react-icons/fa";
 import { MdTableBar, MdOutlineReorder } from 'react-icons/md'
 import { CiCircleMore } from "react-icons/ci";
+import { MdOutlineAnalytics } from "react-icons/md";
 import { BiSolidDish } from 'react-icons/bi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Modal from "./Modal"
@@ -83,10 +84,15 @@ const BottomNav = () => {
           </button>
 
           <button
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-gray-400 hover:text-white hover:bg-[#262626] transition"
+            onClick={() => navigate("/metrics")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-200
+              ${isActive("/metrics") 
+                ? "bg-[#2f2f2f] text-white shadow-md" 
+                : "text-gray-400 hover:text-white hover:bg-[#262626]"}
+            `}
           >
-            <CiCircleMore size={18} />
-            <span className="font-medium text-sm">More</span>
+            <MdOutlineAnalytics size={18} />
+            <span className="font-medium text-sm">Metrics</span>
           </button>
 
         </div>

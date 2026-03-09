@@ -6,7 +6,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { removeUser } from '../../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../../https/index"
-import { MdDashboard } from 'react-icons/md';
+import { MdDashboard, MdEventNote } from 'react-icons/md';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -50,9 +50,13 @@ const Header = () => {
 
       <div className="flex items-center gap-6">
         {
-          userData.role === "Admin" && (
-            <div onClick={()=> navigate("/dashboard")}className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform">
+          userData.role === "Admin" ? (
+            <div onClick={()=> navigate("/dashboard")} className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform header-tooltip" title="Admin Dashboard">
               <MdDashboard className="text-[#f5f5f5] text-2xl drop-shadow-md" />
+            </div>
+          ) : (
+            <div onClick={()=> navigate("/dashboard")} className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform header-tooltip" title="Leave Portal">
+              <MdEventNote className="text-emerald-400 text-2xl drop-shadow-md" />
             </div>
           )
         }

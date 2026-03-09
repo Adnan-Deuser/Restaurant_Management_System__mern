@@ -51,15 +51,15 @@ const MenuContainer = () => {
     return (
         <div className="pb-10">
 
-            <div className='grid grid-cols-4 gap-5 px-10 py-6'>
+            <div className='grid grid-cols-4 gap-5 px-10 py-6 h-[34vh] overflow-y-auto scrollbar-hide'>
                 {menus.map((menu) => (
                     <div
                         key={menu.id}
                         onClick={() => setSelect(menu)}
                         className={`p-5 rounded-2xl cursor-pointer transition-all duration-300
                         ${select.id === menu.id
-                            ? "ring-2 ring-white scale-[1.03]"
-                            : "hover:scale-[1.02] hover:shadow-xl"}
+                                ? "ring-2 ring-white scale-[1.03]"
+                                : "hover:scale-[1.02] hover:shadow-xl"}
                         `}
                         style={{ backgroundImage: menu.bgColor }}
                     >
