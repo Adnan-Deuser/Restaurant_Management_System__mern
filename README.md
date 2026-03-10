@@ -20,6 +20,20 @@ A modern, responsive restaurant management application built with the MERN stack
   <img src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&logoColor=00FF9D" />
   
   <img src="https://img.shields.io/badge/Node.js-000000?style=for-the-badge&logo=nodedotjs&logoColor=00FF9D" />
+  
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
+  
+  <img src="https://img.shields.io/badge/Render-000000?style=for-the-badge&logo=render&logoColor=46E3B7" />
+
+  <img src="https://img.shields.io/badge/TailwindCSS-000000?style=for-the-badge&logo=tailwindcss&logoColor=38B2AC" />
+  
+  <img src="https://img.shields.io/badge/MVC-000000?style=for-the-badge&logoColor=white" />
+  
+  <img src="https://img.shields.io/badge/Axios-000000?style=for-the-badge&logo=axios&logoColor=5A29E4" />
+
+  <img src="https://img.shields.io/badge/TanStack_Query-000000?style=for-the-badge&logo=reactquery&logoColor=FF4154" />
+  
+  <img src="https://img.shields.io/badge/React_Router-000000?style=for-the-badge&logo=reactrouter&logoColor=CA4245" />
   </p>
 </div>
 
