@@ -45,7 +45,7 @@ const EmployeeManagement = () => {
   });
 
   const addEmployeeMutation = useMutation({
-    mutationFn: (data) => axios.post(`${import.meta.env.VITE_BACKEND}/api/user/register`, data),
+    mutationFn: (data) => axios.post(`${import.meta.env.VITE_BACKEND}api/user/register`, data),
     onSuccess: () => {
       enqueueSnackbar("Employee Added Successfully", { variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['employees'] });
@@ -55,7 +55,7 @@ const EmployeeManagement = () => {
   });
 
   const deleteEmployeeMutation = useMutation({
-    mutationFn: (id) => axios.delete(`${import.meta.env.VITE_BACKEND}/api/employee/${id}`, { withCredentials: true }),
+    mutationFn: (id) => axios.delete(`${import.meta.env.VITE_BACKEND}api/employee/${id}`, { withCredentials: true }),
     onSuccess: () => {
       enqueueSnackbar("Employee Removed", { variant: 'info' });
       queryClient.invalidateQueries({ queryKey: ['employees'] });
@@ -63,7 +63,7 @@ const EmployeeManagement = () => {
   });
 
   const applyLeaveMutation = useMutation({
-    mutationFn: (data) => axios.post(`${import.meta.env.VITE_BACKEND}/api/employee/leave`, data, { withCredentials: true }),
+    mutationFn: (data) => axios.post(`${import.meta.env.VITE_BACKEND}api/employee/leave`, data, { withCredentials: true }),
     onSuccess: () => {
       enqueueSnackbar("Leave Request Submitted", { variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['leaves'] });
@@ -73,7 +73,7 @@ const EmployeeManagement = () => {
   });
 
   const updateLeaveStatusMutation = useMutation({
-    mutationFn: ({ id, status }) => axios.put(`${import.meta.env.VITE_BACKEND}/api/employee/leave/${id}`, { status }, { withCredentials: true }),
+    mutationFn: ({ id, status }) => axios.put(`${import.meta.env.VITE_BACKEND}api/employee/leave/${id}`, { status }, { withCredentials: true }),
     onSuccess: (data) => {
       enqueueSnackbar(`Leave ${data.data.data.status}`, { variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['leaves'] });
