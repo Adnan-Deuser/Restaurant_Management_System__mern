@@ -1,80 +1,190 @@
 import { useMutation } from '@tanstack/react-query';
-import React from 'react'
-import { FaSearch, FaUserCircle, FaBell } from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaSearch, FaBell } from 'react-icons/fa'
 import { IoLogOut } from 'react-icons/io5';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeUser } from '../../redux/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../../https/index"
 import { MdDashboard, MdEventNote } from 'react-icons/md';
 
 const Header = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const userData = useSelector((state)=> state.user);
+  const dispatch   = useDispatch();
+  const navigate   = useNavigate();
+  const userData   = useSelector((state) => state.user);
+  const [searchFocused, setSearchFocused] = useState(false);
 
   const logoutMutation = useMutation({
-    mutationFn: ()=> logout(),
-    onSuccess: (data) =>{
-      console.log(data);
-      dispatch(removeUser());
-      navigate("/auth")
-    },
-    onError: (error) =>{
-      console.log(error);
-    }
-  })
+    mutationFn: () => logout(),
+    onSuccess: () => { dispatch(removeUser()); navigate('/auth'); },
+    onError:   (e) => console.log(e),
+  });
 
-  const handleLogout = () =>{
-    logoutMutation.mutate();
-  }
+  const isAdmin = userData.role === 'Admin';
+
+  /* role badge colour */
+  const rolePalette = {
+    Admin:   { dot: 'bg-amber-400',   text: 'text-amber-400'   },
+    Cashier: { dot: 'bg-sky-400',     text: 'text-sky-400'     },
+    Waiter:  { dot: 'bg-emerald-400', text: 'text-emerald-400' },
+  };
+  const rp = rolePalette[userData.role] ?? { dot: 'bg-white/40', text: 'text-white/40' };
 
   return (
-    <header className="flex justify-between items-center py-3 px-6
-                   bg-gradient-to-br from-[#031107] via-[#042510] to-[#05391a]
-                   backdrop-blur-md border-b border-[#111] shadow-lg">
+    <header className="relative flex items-center justify-between
+                       px-6 py-0 h-16
+                       bg-[#07090e] border-b border-white/[0.06]
+                       z-50 select-none">
 
-      <div onClick={()=> navigate("/")} className="flex items-center gap-3 cursor-pointer">
-        <img src='/logo.png' className="h-10 w-10 rounded-xl shadow-md" alt="Hotel Logo" />
-        <h1 className="text-md font-bold text-white drop-shadow-md">Hell's Kitchen</h1>
+      {/* subtle amber glow top-left */}
+      <div className="pointer-events-none absolute top-0 left-0 h-full w-64
+                      bg-gradient-to-r from-amber-500/[0.04] to-transparent" />
+
+      {/* ── Logo ── */}
+      <div
+        onClick={() => navigate('/')}
+        className="flex items-center gap-3 cursor-pointer group flex-shrink-0"
+      >
+        <div className="relative">
+          <div className="absolute inset-0 rounded-xl bg-amber-400/10 blur-md
+                          opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <img
+            src="/logo.png"
+            className="relative h-9 w-9 rounded-xl object-cover"
+            style={{ border: '1px solid rgba(245,158,11,0.25)' }}
+            alt="Logo"
+          />
+        </div>
+        <div className="flex flex-col leading-none">
+          <span
+            className="text-white/90 text-sm font-bold tracking-widest uppercase"
+            style={{ fontFamily: 'Barlow Condensed' }}
+          >
+            Hell's Kitchen
+          </span>
+          <span className="text-amber-400/50 text-[9px] tracking-[0.3em] uppercase mt-0.5"
+            style={{ fontFamily: 'Barlow Condensed' }}>
+            Restaurant OS
+          </span>
+        </div>
       </div>
 
-      <div className="flex items-center gap-3 bg-[#1f1f1f]/90 backdrop-blur-sm rounded-2xl px-5 py-2 shadow-md w-[480px] transition-all hover:scale-105">
-        <FaSearch className="text-white text-md" />
-        <input 
-          type="text"
-          placeholder='Search Your Desires'
-          className='bg-transparent text-[#f5f5f5] placeholder:text-neutral-400 outline-none w-full'
+      {/* ── Search ── */}
+      <div
+        className={`
+          flex items-center gap-3 w-[420px] px-4 py-2.5 rounded-xl
+          border transition-all duration-300
+          ${searchFocused
+            ? 'bg-white/[0.05] border-amber-400/30 shadow-[0_0_20px_rgba(245,158,11,0.07)]'
+            : 'bg-white/[0.03] border-white/[0.07]'
+          }
+        `}
+      >
+        <FaSearch className={`text-sm flex-shrink-0 transition-colors duration-200
+          ${searchFocused ? 'text-amber-400/70' : 'text-white/25'}`}
         />
+        <input
+          type="text"
+          placeholder="Search orders, tables, staff…"
+          onFocus={() => setSearchFocused(true)}
+          onBlur={() => setSearchFocused(false)}
+          className="bg-transparent text-white/80 text-sm placeholder-white/20
+                     outline-none w-full"
+        />
+        {/* kbd hint */}
+        <div className="hidden sm:flex items-center gap-1 flex-shrink-0">
+          <kbd className="text-[9px] text-white/20 bg-white/[0.05] border border-white/10
+                          rounded px-1.5 py-0.5 tracking-widest" style={{fontFamily:'Barlow Condensed'}}>
+            ⌘K
+          </kbd>
+        </div>
       </div>
 
-      <div className="flex items-center gap-6">
-        {
-          userData.role === "Admin" ? (
-            <div onClick={()=> navigate("/dashboard")} className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform header-tooltip" title="Admin Dashboard">
-              <MdDashboard className="text-[#f5f5f5] text-2xl drop-shadow-md" />
-            </div>
-          ) : (
-            <div onClick={()=> navigate("/dashboard")} className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform header-tooltip" title="Leave Portal">
-              <MdEventNote className="text-emerald-400 text-2xl drop-shadow-md" />
-            </div>
-          )
-        }
-        <div className="bg-[#111111]/80 backdrop-blur-sm rounded-xl p-3 cursor-pointer shadow-md hover:scale-110 transition-transform">
-          <FaBell className="text-[#f5f5f5] text-2xl drop-shadow-md" />
-        </div>
-        <div className="flex items-center gap-4 cursor-pointer">
-          <FaUserCircle className="text-[#f5f5f5] text-4xl drop-shadow-md" />
-          <div className="flex flex-col items-start">
-            <h1 className="text-md text-emerald-400 font-semibold drop-shadow-md">{userData.name || "TEST USER"}</h1>
-            <p className="text-xs text-gray-500 font-medium">{userData.role || "Role"}</p>
+      {/* ── Right cluster ── */}
+      <div className="flex items-center gap-2">
+
+        {/* Dashboard / Leave portal */}
+        <NavButton
+          onClick={() => navigate('/dashboard')}
+          title={isAdmin ? 'Dashboard' : 'Leave Portal'}
+        >
+          {isAdmin
+            ? <MdDashboard className="text-white/60 text-lg group-hover:text-amber-400 transition-colors" />
+            : <MdEventNote className="text-white/60 text-lg group-hover:text-amber-400 transition-colors" />
+          }
+        </NavButton>
+
+        {/* Notifications */}
+        <NavButton title="Notifications">
+          <div className="relative">
+            <FaBell className="text-white/60 text-base group-hover:text-amber-400 transition-colors" />
+            {/* unread badge */}
+            <span className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-amber-400
+                             ring-2 ring-[#07090e]" />
           </div>
-          <IoLogOut onClick={handleLogout} className='text-[#f5f5f5] ml-2 hover:text-red-400' size={35} />
-        </div>
-      </div>
+        </NavButton>
 
+        {/* divider */}
+        <div className="w-px h-6 bg-white/[0.08] mx-1" />
+
+        {/* User card */}
+        <div className="flex items-center gap-3 pl-1">
+          {/* avatar placeholder */}
+          <div className="relative flex-shrink-0">
+            <div
+              className="h-8 w-8 rounded-full flex items-center justify-center
+                         text-xs font-bold text-[#07090e]"
+              style={{ background: 'linear-gradient(135deg, #f59e0b, #fbbf24)' }}
+            >
+              {(userData.name || 'U').charAt(0).toUpperCase()}
+            </div>
+            {/* online dot */}
+            <span className={`absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full
+                              ${rp.dot} ring-2 ring-[#07090e]`} />
+          </div>
+
+          <div className="flex flex-col leading-none">
+            <span className="text-white/85 text-sm font-medium"
+              style={{ fontFamily: 'Barlow Condensed', letterSpacing: '0.03em' }}>
+              {userData.name || 'User'}
+            </span>
+            <span className={`text-[10px] tracking-[0.18em] uppercase ${rp.text}`}
+              style={{ fontFamily: 'Barlow Condensed' }}>
+              {userData.role || 'Staff'}
+            </span>
+          </div>
+
+          {/* logout */}
+          <button
+            onClick={() => logoutMutation.mutate()}
+            title="Sign out"
+            className="ml-1 p-2 rounded-lg text-white/25 hover:text-red-400
+                       hover:bg-red-400/08 border border-transparent
+                       hover:border-red-400/20
+                       transition-all duration-200"
+          >
+            <IoLogOut size={18} />
+          </button>
+        </div>
+
+      </div>
     </header>
   );
 };
 
-export default Header
+/* ── tiny icon button ── */
+const NavButton = ({ children, onClick, title }) => (
+  <button
+    onClick={onClick}
+    title={title}
+    className="group relative p-2.5 rounded-xl
+               text-white/50 hover:text-white
+               border border-transparent hover:border-white/10
+               hover:bg-white/[0.04]
+               transition-all duration-200"
+  >
+    {children}
+  </button>
+);
+
+export default Header;
