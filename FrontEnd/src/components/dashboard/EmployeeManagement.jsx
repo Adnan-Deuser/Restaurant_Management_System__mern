@@ -30,7 +30,7 @@ const EmployeeManagement = () => {
   const { data: employees = [] } = useQuery({
     queryKey: ['employees'],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND}/api/employee`, { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND}api/employee`, { withCredentials: true });
       return res.data.data;
     },
     enabled: isAdmin
@@ -39,7 +39,7 @@ const EmployeeManagement = () => {
   const { data: leaves = [] } = useQuery({
     queryKey: ['leaves'],
     queryFn: async () => {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND}/api/employee/leave`, { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND}api/employee/leave`, { withCredentials: true });
       return res.data.data;
     }
   });
