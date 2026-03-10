@@ -2,9 +2,13 @@ import React from 'react'
 
 const Loader = () => {
   return (
-    <div className='fullscreen-loader'>
-        <div className='spinner'></div>
-    </div>
+<div class="fullscreen-loader">
+  <div class="spinner">
+    <div class="spinner-dot"></div>
+    <div class="spinner-core"></div>
+  </div>
+  <span class="loader-label">Loading</span>
+</div>
   )
 }
 
